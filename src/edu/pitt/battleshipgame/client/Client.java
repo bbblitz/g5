@@ -8,14 +8,53 @@ import edu.pitt.battleshipgame.common.ships.*;
 import edu.pitt.battleshipgame.common.GameInterface;
 import edu.pitt.battleshipgame.common.GameTracker;
 
+import java.net.MalformedURLException;
+
+
 public class Client {
     public static GameInterface gi;
     public static int myPlayerID;
     public static ArrayList<Board> gameBoards;
     public static Scanner scan = new Scanner(System.in);
-    
+    public enum Client_State {
+	S_INIT,
+        S_CONNECTING,
+        S_PLACEING,
+        S_PLAYING,
+        S_FIN
+    }
+    public static Client_State state = Client_State.S_INIT;
+    /*
+     * States:
+     * 	Init: Wait for user to enter server address
+     * 						                 ^
+     * 						                 |
+     * 	Connecting: Wait for connection to server (connects) (timeout)
+     * 	 				   	       |
+     * 	 				               V
+     * 	Placeing: Placeing ships, loop on placement if invalid. order:
+     * 		Carrier(5),Battleship(4),Cruiser(3),Submarine(3),Destroyer(2)
+     * 			|
+     * 			V
+     * 	Playing: Game loop
+     * 			|
+     * 			V
+     * 	Fin: Server tells us we won, or we lost
+     */
     public static void main(String [] args) {
-        gi = new ClientWrapper();
+	//Connect to the server
+	while(state == Client_State.S_INIT){
+		String host = get_server_address();
+		state = Client_State.S_CONNECTING;
+		try{
+			gi = new ClientWrapper(host);
+			state = Client_State.S_PLACEING;
+		}catch(Exception e) {
+			System.out.printf("Could not connect to server! Error:\n\t%s\nTry again!\n",e.toString());
+			state = Client_State.S_INIT;
+		}
+	}
+        //gi = new ClientWrapper();
         myPlayerID = gi.registerPlayer();
         System.out.println("You have registered as Player " + myPlayerID);
         System.out.println("Please wait for other players to join");
@@ -27,6 +66,13 @@ public class Client {
         System.out.println(gameBoards.get(myPlayerID).toString(true));
         gi.setBoards(gameBoards);
         gameLoop();
+    }
+
+    public static String get_server_address(){
+	Scanner sc = new Scanner(System.in);
+	System.out.printf("Enter host:");
+	String hostname = sc.nextLine();
+	return hostname;
     }
 
     public static void placeShips(Board board) {

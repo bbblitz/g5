@@ -14,20 +14,20 @@ public class ClientWrapper implements GameInterface {
     ServerInterface serverInterface = null;
     int myPlayerID;
 
-    private static ServerInterface getServer() {
-        URL url = null;
-        try {
+    private static ServerInterface getServer(String host) throws MalformedURLException {
+        URL url = new URL(host);
+        /*try {
             url = new URL("http://localhost:9999/battleship?wsdl");
         } catch (MalformedURLException e) {
             System.err.println(e);
-        }
+        }*/
         QName qname = new QName("http://server.battleshipgame.pitt.edu/", "ServerWrapperService");
         Service service = Service.create(url, qname);
         return service.getPort(ServerInterface.class);
     }
     
-    public ClientWrapper() {
-        serverInterface = getServer();
+    public ClientWrapper(String host) throws MalformedURLException {
+        serverInterface = getServer(host);
     }
     
     public int registerPlayer() {
