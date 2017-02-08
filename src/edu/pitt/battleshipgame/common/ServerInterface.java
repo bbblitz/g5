@@ -13,7 +13,7 @@ import java.util.ArrayList;
 @SOAPBinding(style = Style.RPC)
 public interface ServerInterface {
     @WebMethod int registerPlayer();
-    @WebMethod void waitForPlayers(int playerID);
+    @WebMethod void wait(int playerID);
     @WebMethod byte [] getBoards();
     @WebMethod void setBoards(byte [] boards);
     @WebMethod boolean isGameOver();

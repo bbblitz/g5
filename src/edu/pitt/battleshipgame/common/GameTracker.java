@@ -28,7 +28,7 @@ public class GameTracker {
         return registeredPlayers - 1;
     }
 
-    public void waitForPlayers(int playerID) {
+    public void wait(int playerID) {
         switch (state) {
             case INIT:
             {

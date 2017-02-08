@@ -35,7 +35,7 @@ public class ClientWrapper implements GameInterface {
     }
     
     public void wait(int playerID) {
-        serverInterface.waitForPlayers(playerID);
+        serverInterface.wait(playerID);
     }
     
     public void setBoards(ArrayList<Board> boards) {

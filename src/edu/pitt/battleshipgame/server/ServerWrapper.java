@@ -46,8 +46,8 @@ public class ServerWrapper implements ServerInterface {
      * @param playerID The ID of the player that is waiting.
      */
     @Override
-    public void waitForPlayers(int playerID) {
-        tracker.waitForPlayers(playerID);
+    public void wait(int playerID) {
+        tracker.wait(playerID);
     }
     
     /**

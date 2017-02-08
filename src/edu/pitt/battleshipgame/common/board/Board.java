@@ -3,15 +3,7 @@ package edu.pitt.battleshipgame.common.board;
 import java.util.LinkedList;
 import java.util.List;
 import java.io.Serializable;
-import java.io.ByteArrayOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectInput;
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
-import java.io.IOException;
 
-import edu.pitt.battleshipgame.common.ships.Battleship;
 import edu.pitt.battleshipgame.common.ships.Ship;
 
 public class Board implements Serializable {
@@ -75,7 +67,7 @@ public class Board implements Serializable {
         return shipList;
     }
     
-    public boolean areAllShipsSunk () {
+    public boolean areAllShipsSunk() {
         for (Ship s : shipList) {
             if (! s.isSunk()) {
                 return false;
