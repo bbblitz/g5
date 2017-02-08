@@ -30,26 +30,22 @@ public class ClientWrapper implements GameInterface {
         serverInterface = getServer();
     }
     
-    @Override
     public int registerPlayer() {
         return serverInterface.registerPlayer();
     }
     
-    @Override
     public void wait(int playerID) {
         serverInterface.waitForPlayers(playerID);
     }
     
-    @Override
     public void setBoards(ArrayList<Board> boards) {
         serverInterface.setBoards(Serializer.toByteArray(boards));
     }
     
-    /**
-     * Client side wrapper around the 
-     * @return 
+    /*
+      Client side wrapper around the 
+      @return 
      */
-    @Override
     public ArrayList<Board> getBoards() {
         return (ArrayList<Board>) Serializer.fromByteArray(serverInterface.getBoards());
     }

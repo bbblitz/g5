@@ -26,8 +26,8 @@ public class Coordinate implements Serializable {
     private static final char [] reverseColumnMap =
         { 'A','B','C','D','E','F','G','H','I','J'};
     
-    /**
-     * A simple constructor that calls setCoordinates below.
+    /*
+      A simple constructor that calls setCoordinates below.
      */
     public Coordinate (String coord) throws IllegalArgumentException {
         setCoordinates(coord);
@@ -38,10 +38,10 @@ public class Coordinate implements Serializable {
         setCol(_col);
     }
 
-    /**
-     * This function will parse and set the coordinates for the board.
-     * This allows any parsing errors to be detected on the client side
-     * before it gets to the server.
+    /*
+      This function will parse and set the coordinates for the board.
+      This allows any parsing errors to be detected on the client side
+      before it gets to the server.
      */
     public void setCoordinates(String coord) throws IllegalArgumentException {
         if (coord.length() != 3) {
