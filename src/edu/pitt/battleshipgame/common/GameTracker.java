@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.pitt.battleshipgame.common.board.Board;
+import edu.pitt.battleshipgame.common.board.Coordinate;
+import edu.pitt.battleshipgame.common.ships.Ship;
 
 public class GameTracker {
     public static final int MAX_PLAYERS = 2;
@@ -61,6 +63,23 @@ public class GameTracker {
     
     public List<Board> getBoards() {
         return gameBoards;
+    }
+
+    //TODO:complete these
+    public boolean canAttack(int playerID, Coordinate c){
+	return true;
+    }
+
+    public void doAttack(int playerID, Coordinate c){
+
+    }
+
+    public boolean canPlaceShipOnBoard(int playerID, Ship s){
+	return true;
+    }
+
+    void placeShipOnBoard(int playerID, Ship s){
+
     }
     
     public void setBoards(ArrayList<Board> boards) {
