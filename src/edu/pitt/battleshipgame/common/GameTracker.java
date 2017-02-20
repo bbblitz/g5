@@ -20,7 +20,14 @@ public class GameTracker {
         System.out.println("Server constructed.");
     }
 
+    /*
+     * Returns -1 if the player cannot be registered for any reason
+     */
     public int registerPlayer() {
+	if(registeredPlayers > MAX_PLAYERS){
+		System.out.println("Attempted to register more than 2 players for a game!");
+		return -1;
+	}
         synchronized(lock) {
             registeredPlayers++;
             gameBoards.add(new Board("Player " + (registeredPlayers - 1) + " board"));
