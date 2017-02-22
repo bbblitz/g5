@@ -12,6 +12,10 @@ public class Cruiser extends Ship {
         // Call the parent constructor and set the length to 5.
         super(start, end, board);
     }
+
+    public Cruiser(){
+	super();
+    }
     
     @Override
     public final int getLength() {

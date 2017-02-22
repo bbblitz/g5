@@ -26,7 +26,7 @@ public abstract class ShipFactory {
     }
 
     public static Ship newShipFromType(Ship.ShipType t){
-	switch(type){
+	switch(t){
 	    case BATTLESHIP:
 		return new Battleship();
 	    case CARRIER:
@@ -38,7 +38,7 @@ public abstract class ShipFactory {
 	    case DESTROYER:
 		return new Destroyer();
 	    default:
-		throw new IllegalArgumentException(type + " does not identify a valid ship type.");
+		throw new IllegalArgumentException(t + " does not identify a valid ship type.");
 	}
     }
 
