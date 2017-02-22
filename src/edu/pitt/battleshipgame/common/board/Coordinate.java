@@ -50,9 +50,8 @@ public class Coordinate implements Serializable {
         
         int _col = 0;
         String [] coordinates = coord.split(":");
-        char dummy = Character.toUpperCase(coordinates[0].charAt(0));
-        if (columnMap.keySet().contains(dummy)) {
-            _col = columnMap.get(dummy);
+        if (columnMap.keySet().contains(coordinates[0].charAt(0))) {
+            _col = columnMap.get(coordinates[0].charAt(0));
         } else {
             throw new IllegalArgumentException(formattingRules);
         }
