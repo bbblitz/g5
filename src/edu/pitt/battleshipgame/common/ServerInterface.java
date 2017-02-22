@@ -14,8 +14,8 @@ import java.util.ArrayList;
 @SOAPBinding(style = Style.RPC)
 public interface ServerInterface {
     @WebMethod int registerPlayer();
-    @WebMethod void placeShipOnBoard(int playerID, Ship s);
-    @WebMethod void doAttack(int playerID, Coordinate c);
+    @WebMethod void placeShipOnBoard(int playerID, byte[] s);
+    @WebMethod void doAttack(int playerID, byte[] c);
     @WebMethod void wait(int playerID);
     @WebMethod byte [] getBoards();
     @WebMethod void setBoards(byte [] boards);

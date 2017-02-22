@@ -36,6 +36,9 @@ public class Client {
      * 		Carrier(5),Battleship(4),Cruiser(3),Submarine(3),Destroyer(2)
      * 			|
      * 			V
+     * 	Waiting: Waiting for the other player to finish placeing their ships
+     * 			|
+     * 			V
      * 	Playing: Game loop
      * 			|
      * 			V
@@ -75,19 +78,40 @@ public class Client {
 	return hostname;
     }
 
+    private static Coordinate getcoord(String prompt){
+	System.out.println(prompt);
+	while(true){
+	    try{
+		return new Coordinate(scan.nextLine());
+	    }catch(Exception e){
+		System.out.printf("Unaccpetable coordinate!\n%s\n",prompt);
+	    }
+	}
+    }
+
+    //Adds a single ship to the board
+    private static void placeship(Ship.ShipType t, Board b){
+	if(t == Ship.ShipType.NONE) return;
+	while(true){
+            Coordinate start = getcoord("Please enter a start coordinate to place your " + ShipFactory.getNameFromType(t));
+            Coordinate end = getcoord("Please enter an end coordinate to place your " + ShipFactory.getNameFromType(t));
+            Ship s = ShipFactory.newShipFromType(t,start,end,b);
+            if(b.canShipFit(s)){
+                b.addShip(s);
+		gi.placeShipOnBoard(myPlayerID,s);
+                break;
+            }else{
+		System.out.println("That is an unacceptable place to put your " + ShipFactory.getNameFromType(t));
+	    }
+
+	}
+    }
+
     public static void placeShips(Board board) {
         System.out.println("Your Board:");
         System.out.println(board.toString(true));
         for(Ship.ShipType type : Ship.ShipType.values()) {
-            if(type != Ship.ShipType.NONE) {
-                System.out.println("Please enter a start coordinate to place your " + ShipFactory.getNameFromType(type));
-                Coordinate start = new Coordinate(scan.nextLine());
-                System.out.println("Please enter an end coordinate to place your " + ShipFactory.getNameFromType(type));
-                Coordinate end = new Coordinate(scan.nextLine());
-                // We don't need to track a reference to the ship since it will be
-                // on the board.
-                ShipFactory.newShipFromType(type, start, end, board);
-            }
+	    placeship(type,board);
         }
     }
 

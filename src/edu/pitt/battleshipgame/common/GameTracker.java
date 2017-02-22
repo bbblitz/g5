@@ -67,19 +67,22 @@ public class GameTracker {
 
     //TODO:complete these
     public boolean canAttack(int playerID, Coordinate c){
+	System.out.println("Called canAttack");
 	return true;
     }
 
     public void doAttack(int playerID, Coordinate c){
 
+	System.out.println("Called doAttack");
     }
 
     public boolean canPlaceShipOnBoard(int playerID, Ship s){
+	System.out.println("Called canPlaceShipOnBoard");
 	return true;
     }
 
-    void placeShipOnBoard(int playerID, Ship s){
-
+    public void placeShipOnBoard(int playerID, Ship s){
+	System.out.println("Called placeShipOnBoard");
     }
     
     public void setBoards(ArrayList<Board> boards) {

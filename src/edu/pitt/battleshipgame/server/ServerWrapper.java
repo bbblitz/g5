@@ -77,12 +77,24 @@ public class ServerWrapper implements ServerInterface {
     }
 
     @Override
-    public void placeShipOnBoard(int playerID, Ship s){
+    public void placeShipOnBoard(int playerID, byte[] sh){
+	Ship s = (Ship) Serializer.fromByteArray(sh);
+	if(!tracker.canPlaceShipOnBoard(playerID,s)){
+		System.out.printf("Player %d was cheating! they tried to place a ship at %s but couldn't!",playerID,s.toString());
+		return;
+	}
 
+	tracker.placeShipOnBoard(playerID,s);
     }
     @Override
-    public void doAttack(int playerID, Coordinate c){
-
+    public void doAttack(int playerID, byte[] co){
+	Coordinate c = (Coordinate) Serializer.fromByteArray(co);
+	if(!tracker.canAttack(playerID,c)){
+		System.out.printf("Player %d was cheating! They tried to attack %s but couldn't!", playerID, c.toString());
+		return;
+	}
+	
+	tracker.doAttack(playerID,c);
     }
     
     public boolean isGameOver(){

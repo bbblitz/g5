@@ -2,7 +2,8 @@ package edu.pitt.battleshipgame.common.ships;
 
 import edu.pitt.battleshipgame.common.board.*;
 
-public class Carrier extends Ship {
+import java.io.Serializable;
+public class Carrier extends Ship implements Serializable{
     public static final ShipType TYPE = ShipType.CARRIER;
     public static final int LENGTH = 5;
     public static final int MAX_ALLOWED = 1;
