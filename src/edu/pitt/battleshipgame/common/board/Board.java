@@ -50,17 +50,18 @@ public class Board implements Serializable {
     }
     
     public boolean canShipFit(Ship ship) {
-        int shipCount = 0;
-        for (Ship s : shipList) {
-            if (s.getType() == ship.getType()) {
-                shipCount++;
-            }
-        }
-        if (shipCount >= ship.maxAllowed()) {
-            return false;
-        } else {
-            return true;
-        }
+	//Make sure the ship is not already on the board
+	for(Ship s : shipList)
+	    if(s.getClass() == ship.getClass())
+		return false;
+
+	//Make sure there is not already a shit blocking our path
+	for(Coordinate c : ship.getCoordinates())
+	    if(theShips[c.getRow()][c.getCol()] != null)
+		return false;
+	
+	//If we've made it to here, we're good to go!
+	return true;
     }
     
     public List<Ship> getShipList() {
