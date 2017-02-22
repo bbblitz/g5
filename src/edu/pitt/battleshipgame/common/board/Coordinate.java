@@ -33,7 +33,7 @@ public class Coordinate implements Serializable {
         setCoordinates(coord);
     }
     
-    public Coordinate (int _col, int _row) {
+    public Coordinate (int _row, int _col) {
         setRow(_row);
         setCol(_col);
     }
