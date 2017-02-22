@@ -105,6 +105,9 @@ public class Board implements Serializable {
                 if (showShips && theShips[row][col] != null) {
                     boardRepresentation[row+1][col+1] = 'S';
                 }
+                else{
+                    boardRepresentation[row+1][col+1] = ' ';
+                }
             }
         }
         for (char [] row : boardRepresentation) {
