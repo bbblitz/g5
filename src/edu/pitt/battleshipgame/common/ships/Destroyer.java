@@ -13,6 +13,10 @@ public class Destroyer extends Ship {
         super(start, end, board);
     }
     
+    public Destroyer(){
+	super()
+    }
+    
     @Override
     public final int getLength() {
         return LENGTH;

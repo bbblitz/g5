@@ -25,6 +25,23 @@ public abstract class ShipFactory {
         }
     }
 
+    public static Ship newShipFromType(Ship.ShipType t){
+	switch(type){
+	    case BATTLESHIP:
+		return new Battleship();
+	    case CARRIER:
+		return new Carrier();
+	    case CRUISER:
+		return new Cruiser();
+	    case SUBMARINE:
+		return new Submarine();
+	    case DESTROYER:
+		return new Destroyer();
+	    default:
+		throw new IllegalArgumentException(type + " does not identify a valid ship type.");
+	}
+    }
+
     public static int maxAllowedFromType(Ship.ShipType type) {
         switch (type) {
             case BATTLESHIP:

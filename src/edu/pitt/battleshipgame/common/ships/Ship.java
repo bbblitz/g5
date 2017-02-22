@@ -33,6 +33,17 @@ public abstract class Ship implements Serializable {
         this.end = end;
         addBoard(board);
     }
+
+    public Ship(){
+	this.start = null;
+	this.end = null;
+	this.myBoard = null;
+    }
+
+    public void SetStartEnd(Coordinate s, Coordinate e){
+	this.start = s;
+	this.end = e;
+    }
     
     public List<Coordinate> getCoordinates() {
         LinkedList coordinates = new LinkedList<Coordinate>();

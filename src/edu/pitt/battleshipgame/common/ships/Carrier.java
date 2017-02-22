@@ -12,6 +12,10 @@ public class Carrier extends Ship {
         // Call the parent constructor and set the length to 5.
         super(start, end, board);
     }
+
+    public Carrier (){
+	super();
+    }
     
     @Override
     public final int getLength() {
