@@ -5,7 +5,8 @@ import javax.xml.ws.WebServiceProvider;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.pitt.battleshipgame.common.board.Board;
+import edu.pitt.battleshipgame.common.board.*;
+import edu.pitt.battleshipgame.common.ships.*;
 import edu.pitt.battleshipgame.common.Serializer;
 import edu.pitt.battleshipgame.common.GameTracker;
 import edu.pitt.battleshipgame.common.ServerInterface;
@@ -30,7 +31,7 @@ public class ServerWrapper implements ServerInterface {
         return tracker;
     }
 
-    /**
+    /*
      * @see Server.registerPlayer
      * 
      * @return The id of the registered player.
@@ -40,7 +41,7 @@ public class ServerWrapper implements ServerInterface {
         return tracker.registerPlayer();
     }
 
-    /**
+    /*
      * @see Server.waitForPlayers
      * 
      * @param playerID The ID of the player that is waiting.
@@ -50,7 +51,7 @@ public class ServerWrapper implements ServerInterface {
         tracker.wait(playerID);
     }
     
-    /**
+    /*
      * The Network version of @see Server.getBoards will convert the array list
      * to a byte array.
      * 
@@ -61,7 +62,7 @@ public class ServerWrapper implements ServerInterface {
         return Serializer.toByteArray(new ArrayList<Board>(tracker.getBoards()));
     }
     
-    /**
+    /*
      * The Network version of @see Server.registerBoard. It will convert the
      * byte [] board to a Board object to be passed to the Server.
      * 
@@ -73,6 +74,27 @@ public class ServerWrapper implements ServerInterface {
     @Override
     public void setBoards(byte [] boards) {
         tracker.setBoards((ArrayList<Board>)Serializer.fromByteArray(boards));
+    }
+
+    @Override
+    public void placeShipOnBoard(int playerID, byte[] sh){
+	Ship s = (Ship) Serializer.fromByteArray(sh);
+	if(!tracker.canPlaceShipOnBoard(playerID,s)){
+		System.out.printf("Player %d was cheating! they tried to place a ship at %s but couldn't!",playerID,s.toString());
+		return;
+	}
+
+	tracker.placeShipOnBoard(playerID,s);
+    }
+    @Override
+    public void doAttack(int playerID, byte[] co){
+	Coordinate c = (Coordinate) Serializer.fromByteArray(co);
+	if(!tracker.canAttack(playerID,c)){
+		System.out.printf("Player %d was cheating! They tried to attack %s but couldn't!", playerID, c.toString());
+		return;
+	}
+	
+	tracker.doAttack(playerID,c);
     }
     
     public boolean isGameOver(){

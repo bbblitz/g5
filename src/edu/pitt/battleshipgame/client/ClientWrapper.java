@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import edu.pitt.battleshipgame.common.Serializer;
 import edu.pitt.battleshipgame.common.board.*;
+import edu.pitt.battleshipgame.common.ships.*;
 import edu.pitt.battleshipgame.common.*;
 
 public class ClientWrapper implements GameInterface {
@@ -40,6 +41,14 @@ public class ClientWrapper implements GameInterface {
     
     public void setBoards(ArrayList<Board> boards) {
         serverInterface.setBoards(Serializer.toByteArray(boards));
+    }
+
+    public void placeShipOnBoard(int playerID, Ship s){
+	serverInterface.placeShipOnBoard(playerID,Serializer.toByteArray(s));
+    }
+
+    public void doAttack(int playerID, Coordinate c){
+	serverInterface.doAttack(playerID,Serializer.toByteArray(c));
     }
     
     /*
