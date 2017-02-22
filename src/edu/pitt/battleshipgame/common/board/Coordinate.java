@@ -33,7 +33,7 @@ public class Coordinate implements Serializable {
         setCoordinates(coord);
     }
     
-    public Coordinate (int _row, int _col) {
+    public Coordinate (int _col, int _row) {
         setRow(_row);
         setCol(_col);
     }
@@ -50,8 +50,9 @@ public class Coordinate implements Serializable {
         
         int _col = 0;
         String [] coordinates = coord.split(":");
-        if (columnMap.keySet().contains(coordinates[0].charAt(0))) {
-            _col = columnMap.get(coordinates[0].charAt(0));
+        char dummy = Character.toUpperCase(coordinates[0].charAt(0));
+        if (columnMap.keySet().contains(dummy)) {
+            _col = columnMap.get(dummy);
         } else {
             throw new IllegalArgumentException(formattingRules);
         }
