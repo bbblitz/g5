@@ -65,9 +65,9 @@ public abstract class ShipFactory {
     }
     
     public static void checkShipLength(int length, Coordinate start, Coordinate end) {
-        if (start.getCol() == end.getCol() && (end.getRow() - start.getRow()) != length)
+        if (start.getCol() == end.getCol() && (end.getRow() - start.getRow()) != length-1)
             throw new IllegalArgumentException("Ship length must be " + length);
-        else if (start.getRow() == end.getRow() && (end.getCol() - start.getCol()) != length)
+        else if (start.getRow() == end.getRow() && (end.getCol() - start.getCol()) != length-1)
             throw new IllegalArgumentException("Ship length must be " + length);
     }
 }
