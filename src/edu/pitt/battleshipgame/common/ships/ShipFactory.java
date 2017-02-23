@@ -11,14 +11,19 @@ public abstract class ShipFactory {
     public static Ship newShipFromType(Ship.ShipType type, Coordinate start, Coordinate end, Board board) {
         switch (type) {
             case BATTLESHIP:
+                checkShipLength(4, start, end);
                 return new Battleship(start, end, board);
             case CARRIER:
+                checkShipLength(5, start, end);
                 return new Carrier(start, end, board);
             case CRUISER:
+                checkShipLength(3, start, end);
                 return new Cruiser(start, end, board);
             case SUBMARINE:
+                checkShipLength(3, start, end);
                 return new Submarine(start, end, board);
             case DESTROYER:
+                checkShipLength(2, start, end);
                 return new Destroyer(start, end, board);
             default:
                 throw new IllegalArgumentException(type + " does not identify a valid ShipType.");
@@ -57,5 +62,12 @@ public abstract class ShipFactory {
             default:
                 throw new IllegalArgumentException(type + " does not identify a valid ShipType.");
         }
+    }
+    
+    public static void checkShipLength(int length, Coordinate start, Coordinate end) {
+        if (start.getCol() == end.getCol() && (end.getRow() - start.getRow()) != length)
+            throw new IllegalArgumentException("Ship length must be " + length);
+        else if (start.getRow() == end.getRow() && (end.getCol() - start.getCol()) != length)
+            throw new IllegalArgumentException("Ship length must be " + length);
     }
 }
