@@ -11,19 +11,14 @@ public abstract class ShipFactory {
     public static Ship newShipFromType(Ship.ShipType type, Coordinate start, Coordinate end, Board board) {
         switch (type) {
             case BATTLESHIP:
-                checkShipLength(4, start, end);
                 return new Battleship(start, end, board);
             case CARRIER:
-                checkShipLength(5, start, end);
                 return new Carrier(start, end, board);
             case CRUISER:
-                checkShipLength(3, start, end);
                 return new Cruiser(start, end, board);
             case SUBMARINE:
-                checkShipLength(3, start, end);
                 return new Submarine(start, end, board);
             case DESTROYER:
-                checkShipLength(2, start, end);
                 return new Destroyer(start, end, board);
             default:
                 throw new IllegalArgumentException(type + " does not identify a valid ShipType.");
@@ -64,10 +59,40 @@ public abstract class ShipFactory {
         }
     }
     
-    public static void checkShipLength(int length, Coordinate start, Coordinate end) {
+    public static boolean checkShipLength(Ship.ShipType type, Coordinate start, Coordinate end) {
+        int length = 0;
+        switch (type) {
+            case BATTLESHIP:
+                length = 4;
+                break;
+            case CARRIER:
+                length = 5;
+                break;
+            case CRUISER:
+                length = 3;
+                break;
+            case SUBMARINE:
+                length = 3;
+                break;
+            case DESTROYER:
+                length = 2;
+                break;
+            default:
+                throw new IllegalArgumentException(type + " does not identify a valid ShipType.");  
+        }
+        
         if (start.getCol() == end.getCol() && (end.getRow() - start.getRow()) != length-1)
-            throw new IllegalArgumentException("Ship length must be " + length);
+            return false;
         else if (start.getRow() == end.getRow() && (end.getCol() - start.getCol()) != length-1)
-            throw new IllegalArgumentException("Ship length must be " + length);
+            return false;
+        
+        return true;
+    }
+    
+    public static boolean checkForDiagonal(Coordinate start, Coordinate end) {
+        if (start.getCol() != end.getCol() && start.getRow() != end.getRow())
+            return false;
+        else
+            return true;
     }
 }
