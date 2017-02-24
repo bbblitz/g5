@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
+import java.lang.Math.*;
 import edu.pitt.battleshipgame.common.board.*;
 
 public abstract class Ship implements Serializable {
@@ -29,6 +29,13 @@ public abstract class Ship implements Serializable {
     Coordinate start, end;
     
     public Ship(Coordinate start, Coordinate end, Board board) {
+	//Make sure the ship is either vertical or horizontal, not diagonal
+	if(!(start.getCol() == end.getCol() || start.getRow() == end.getRow()))
+		throw new IllegalArgumentException("Ship must be placed either vertically or horizontally");
+	//Make sure the ship is the correct length, 
+	//adding 1 is needed because the board start from 1, not 0
+	if(end.getRow() - start.getRow() + 1 != getLength() && end.getCol() - start.getCol() + 1 != getLength())
+		throw new IllegalArgumentException("This ship must be " + getLength() + " blocks long");
         this.start = start;
         this.end = end;
         addBoard(board);
