@@ -75,4 +75,45 @@ public abstract class ShipFactory {
                 throw new IllegalArgumentException(type + " does not identify a valid ShipType.");
         }
     }
+<<<<<<< HEAD
 }
+=======
+    
+    public static boolean checkShipLength(Ship.ShipType type, Coordinate start, Coordinate end) {
+        int length = 0;
+        switch (type) {
+            case BATTLESHIP:
+                length = 4;
+                break;
+            case CARRIER:
+                length = 5;
+                break;
+            case CRUISER:
+                length = 3;
+                break;
+            case SUBMARINE:
+                length = 3;
+                break;
+            case DESTROYER:
+                length = 2;
+                break;
+            default:
+                throw new IllegalArgumentException(type + " does not identify a valid ShipType.");  
+        }
+        
+        if (start.getCol() == end.getCol() && (end.getRow() - start.getRow()) != length-1)
+            return false;
+        else if (start.getRow() == end.getRow() && (end.getCol() - start.getCol()) != length-1)
+            return false;
+        
+        return true;
+    }
+    
+    public static boolean checkForDiagonal(Coordinate start, Coordinate end) {
+        if (start.getCol() != end.getCol() && start.getRow() != end.getRow())
+            return false;
+        else
+            return true;
+    }
+}
+>>>>>>> 6aaf91ebc117fc6cd764dfc3d84ef5233d8cbc6a

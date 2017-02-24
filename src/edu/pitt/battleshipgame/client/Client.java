@@ -111,7 +111,26 @@ public class Client {
         System.out.println("Your Board:");
         System.out.println(board.toString(true));
         for(Ship.ShipType type : Ship.ShipType.values()) {
+<<<<<<< HEAD
 	    placeship(type,board);
+=======
+            if(type != Ship.ShipType.NONE) {
+                while (true) {
+                    System.out.println("Please enter a start coordinate to place your " + ShipFactory.getNameFromType(type));
+                    Coordinate start = new Coordinate(scan.nextLine());
+                    System.out.println("Please enter an end coordinate to place your " + ShipFactory.getNameFromType(type));
+                    Coordinate end = new Coordinate(scan.nextLine());
+                    // We don't need to track a reference to the ship since it will be
+                    // on the board.
+                    if (ShipFactory.checkForDiagonal(start, end) && ShipFactory.checkShipLength(type, start, end)){
+                        ShipFactory.newShipFromType(type, start, end, board);
+                        break;
+                    } else {
+                        System.out.println("Error placing ship. Please try again.");
+                    }
+                }
+            }
+>>>>>>> 6aaf91ebc117fc6cd764dfc3d84ef5233d8cbc6a
         }
     }
 
