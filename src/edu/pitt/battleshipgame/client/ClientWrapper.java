@@ -47,8 +47,8 @@ public class ClientWrapper implements GameInterface {
 	serverInterface.placeShipOnBoard(playerID,Serializer.toByteArray(s));
     }
 
-    public void doAttack(int playerID, Coordinate c){
-	serverInterface.doAttack(playerID,Serializer.toByteArray(c));
+    public MoveResult doAttack(int playerID, Coordinate c){
+	return (MoveResult) Serializer.fromByteArray(serverInterface.doAttack(playerID,Serializer.toByteArray(c)));
     }
     
     /*
@@ -61,5 +61,17 @@ public class ClientWrapper implements GameInterface {
     
     public boolean isGameOver() {
         return serverInterface.isGameOver();
+    }
+
+    public Coordinate getFeedback(){
+	return (Coordinate) Serializer.fromByteArray(serverInterface.getFeedback());
+    }
+
+    public int getTurn(){
+	return serverInterface.getTurn();
+    }
+
+    public GameState getState(){
+	return serverInterface.getState();
     }
 }

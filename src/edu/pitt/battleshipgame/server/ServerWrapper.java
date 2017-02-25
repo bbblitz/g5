@@ -9,6 +9,7 @@ import edu.pitt.battleshipgame.common.board.*;
 import edu.pitt.battleshipgame.common.ships.*;
 import edu.pitt.battleshipgame.common.Serializer;
 import edu.pitt.battleshipgame.common.GameTracker;
+import edu.pitt.battleshipgame.common.GameState;
 import edu.pitt.battleshipgame.common.ServerInterface;
 
 //Service Implementation
@@ -79,24 +80,29 @@ public class ServerWrapper implements ServerInterface {
     @Override
     public void placeShipOnBoard(int playerID, byte[] sh){
 	Ship s = (Ship) Serializer.fromByteArray(sh);
-	if(!tracker.canPlaceShipOnBoard(playerID,s)){
-		System.out.printf("Player %d was cheating! they tried to place a ship at %s but couldn't!",playerID,s.toString());
-		return;
-	}
-
 	tracker.placeShipOnBoard(playerID,s);
     }
     @Override
-    public void doAttack(int playerID, byte[] co){
+    public byte[] doAttack(int playerID, byte[] co){
 	Coordinate c = (Coordinate) Serializer.fromByteArray(co);
-	if(!tracker.canAttack(playerID,c)){
-		System.out.printf("Player %d was cheating! They tried to attack %s but couldn't!", playerID, c.toString());
-		return;
-	}
-	
-	tracker.doAttack(playerID,c);
+	return Serializer.toByteArray(tracker.doAttack(playerID,c));
     }
     
+    @Override
+    public byte[] getFeedback(){
+	return Serializer.toByteArray(tracker.getFeedback());
+    }
+
+    @Override
+    public GameState getState(){
+	return tracker.getState();
+    }
+
+    @Override
+    public int getTurn(){
+	return tracker.getTurn();
+    }
+
     public boolean isGameOver(){
         return tracker.isGameOver();
     }

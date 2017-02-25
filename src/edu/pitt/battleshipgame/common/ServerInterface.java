@@ -7,6 +7,7 @@ import javax.jws.soap.SOAPBinding.Style;
 
 import edu.pitt.battleshipgame.common.board.*;
 import edu.pitt.battleshipgame.common.ships.*;
+import edu.pitt.battleshipgame.common.*;
 import java.util.ArrayList;
 
 //Service Endpoint Interface
@@ -15,9 +16,12 @@ import java.util.ArrayList;
 public interface ServerInterface {
     @WebMethod int registerPlayer();
     @WebMethod void placeShipOnBoard(int playerID, byte[] s);
-    @WebMethod void doAttack(int playerID, byte[] c);
+    @WebMethod byte [] doAttack(int playerID, byte[] c);
     @WebMethod void wait(int playerID);
     @WebMethod byte [] getBoards();
     @WebMethod void setBoards(byte [] boards);
+    @WebMethod byte [] getFeedback();
+    @WebMethod int getTurn();
+    @WebMethod GameState getState();
     @WebMethod boolean isGameOver();
 }

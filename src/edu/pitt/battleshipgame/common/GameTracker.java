@@ -11,6 +11,7 @@ public class GameTracker {
     public static final int MAX_PLAYERS = 2;
     private int registeredPlayers = 0;
     private ArrayList<Board> gameBoards;
+    private Coordinate feedback; //The last player's attack to happen
     private GameState state = GameState.INIT;
     private int playerTurn = 0;
     Object lock;
@@ -34,6 +35,9 @@ public class GameTracker {
             registeredPlayers++;
             gameBoards.add(new Board("Player " + (registeredPlayers - 1) + " board"));
         }
+	if(registeredPlayers == MAX_PLAYERS){
+	    state=GameState.PLACEING;
+	}
         return registeredPlayers - 1;
     }
 
@@ -72,29 +76,66 @@ public class GameTracker {
         return gameBoards;
     }
 
-    //TODO:complete these
-    public boolean canAttack(int playerID, Coordinate c){
-	System.out.println("Called canAttack");
-	return true;
+    public int getTurn(){
+	return playerTurn;
     }
 
-    public void doAttack(int playerID, Coordinate c){
+    //Gets the other player's ID equivalent to playerID == 1?0:1
+    public int getOtherPlayerId(int playerID){
+	if(playerID == 1) return 0;
+	else return 1;
+    }
 
+    //TODO:complete these
+    public boolean canAttack(int playerID, Coordinate c){
+	//Make sure it's our turn
+	if(playerTurn != playerID) return false;
+	return gameBoards.get(getOtherPlayerId(playerID)).canAttack(c);
+    }
+
+    public MoveResult doAttack(int playerID, Coordinate c){
 	System.out.println("Called doAttack");
+	if(!canAttack(playerID,c))
+	    System.out.println("Player " + playerID + " was cheating! they tried to attack where they couldn't!");
+	feedback = c;
+	System.out.printf("After attack was performed, player's boards are:\nPlayer 0:\n%s\nPlayer 1:\n%s",gameBoards.get(0),gameBoards.get(1));
+	playerTurn = getOtherPlayerId(playerTurn);
+	return gameBoards.get(getOtherPlayerId(playerID)).doAttack(c);
     }
 
     public boolean canPlaceShipOnBoard(int playerID, Ship s){
 	System.out.println("Called canPlaceShipOnBoard");
-	return true;
+	return gameBoards.get(playerID).canShipFit(s);
     }
 
     public void placeShipOnBoard(int playerID, Ship s){
 	System.out.println("Called placeShipOnBoard");
+
+	//Make sure we can place the ship
+	if(!canPlaceShipOnBoard(playerID,s))
+		System.out.println("Player " + playerID + " was cheating! they tried to palce a ship where they couldn't!");
+	gameBoards.get(playerID).addShip(s);
+
+	//Check if we're done adding ships to the board
+	if(gameBoards.get(0).getShipList().size() == 5 && gameBoards.get(1).getShipList().size() == 5){
+	    System.out.println("Setting state to playing");
+	    state = GameState.PLAYING;
+	}
+
     }
     
     public void setBoards(ArrayList<Board> boards) {
         gameBoards = boards;
         playerTurn = (playerTurn + 1) % registeredPlayers;
+	throw new IllegalArgumentException("Someone tried calling setBoards() instead of placeShipOnBoard() or doAttack()!");
+    }
+
+    public Coordinate getFeedback(){
+	return feedback;
+    }
+
+    public GameState getState(){
+	return state;
     }
     
     public boolean isGameOver() {
