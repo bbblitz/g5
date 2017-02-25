@@ -10,5 +10,9 @@ package edu.pitt.battleshipgame.common;
  * @author Andrew F. Conn
  */
 public enum GameState {
-    INIT, PLAYING
+    INIT,
+    CONNECTING,
+    PLACEING,
+    PLAYING,
+    FIN
 }

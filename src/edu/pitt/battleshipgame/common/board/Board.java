@@ -5,6 +5,7 @@ import java.util.List;
 import java.io.Serializable;
 
 import edu.pitt.battleshipgame.common.ships.Ship;
+import edu.pitt.battleshipgame.common.MoveResult;
 
 public class Board implements Serializable {
     public static final int BOARD_DIM = 10;
@@ -15,6 +16,9 @@ public class Board implements Serializable {
     //private ArrayList < ArrayList < Ship > > theShips;
     private Ship [][] theShips;
     private boolean [][] moves;
+
+    //Only use this on the client side to keep track of hits on your enemy's board.
+    private boolean [][] hits;
     // Keep a list of all ships on this board for quick searching.
     LinkedList<Ship> shipList;
     private String name;
@@ -22,12 +26,22 @@ public class Board implements Serializable {
     public Board (String _name) {
         theShips = new Ship[BOARD_DIM][BOARD_DIM];
         moves = new boolean[BOARD_DIM][BOARD_DIM];
+	hits = new boolean[BOARD_DIM][BOARD_DIM];
         shipList = new LinkedList<Ship>();
         name = _name;
     }
     
     public String getName() {
         return name;
+    }
+
+    public void applyHitMarker(Coordinate c){
+	moves[c.getRow()][c.getCol()] = true;
+	hits[c.getRow()][c.getCol()] = true;
+    }
+
+    public void applyMissMarker(Coordinate c){
+	moves[c.getRow()][c.getCol()] = true;
     }
     
     public void addShip(Ship ship) {
@@ -39,7 +53,29 @@ public class Board implements Serializable {
         }
         shipList.add(ship);
     }
-    
+
+    //Checks if an attack is reasonable
+    public boolean canAttack(Coordinate c){
+	//Make sure we havn't already attacked this spot
+	if(moves[c.getCol()][c.getRow()]) return false;
+	return true;
+    }
+
+   
+    //Performs an attack, returns wether or not we hit
+    public MoveResult doAttack(Coordinate c){
+	moves[c.getCol()][c.getRow()] = true;
+	Ship s = theShips[c.getCol()][c.getRow()];
+	if(s != null){
+	    s.registerHit();
+	    if(s.isSunk())
+		return new MoveResult(true,s.getType());
+	    else
+		return new MoveResult(true,null);
+	}
+	return new MoveResult(false,null);
+    }
+
     public Ship makeMove(Coordinate move) {
         moves[move.getCol()][move.getRow()] = true;
         Ship ship = theShips[move.getCol()][move.getRow()];
@@ -96,15 +132,17 @@ public class Board implements Serializable {
         for (int row = 0; row < BOARD_DIM; row++) {
             for (int col = 0; col < BOARD_DIM; col++) {
                 if (moves[row][col]) {
-                    if (theShips[row][col] != null) {
+                    if (theShips[row][col] != null || hits[row][col]) {
                         boardRepresentation[row+1][col+1] = 'X';
                     } else {
                         boardRepresentation[row+1][col+1] = 'O';
                     }
                 }
-                if (showShips && theShips[row][col] != null) {
+		else if (showShips && theShips[row][col] != null) {
                     boardRepresentation[row+1][col+1] = 'S';
-                }
+                }else{
+		    boardRepresentation[row+1][col+1] = ' ';
+		}
             }
         }
         for (char [] row : boardRepresentation) {

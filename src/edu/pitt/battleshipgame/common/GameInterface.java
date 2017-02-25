@@ -10,6 +10,9 @@ public interface GameInterface {
     ArrayList<Board> getBoards();
     void setBoards(ArrayList<Board> boards);
     void placeShipOnBoard(int playerID, Ship s);
-    void doAttack(int playerID, Coordinate c);
+    MoveResult doAttack(int playerID, Coordinate c);
+    Coordinate getFeedback();
+    int getTurn();
+    GameState getState();
     boolean isGameOver();
 }

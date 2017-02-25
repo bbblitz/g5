@@ -5,8 +5,7 @@ import java.util.Scanner;
 
 import edu.pitt.battleshipgame.common.board.*;
 import edu.pitt.battleshipgame.common.ships.*;
-import edu.pitt.battleshipgame.common.GameInterface;
-import edu.pitt.battleshipgame.common.GameTracker;
+import edu.pitt.battleshipgame.common.*;
 
 import java.net.MalformedURLException;
 
@@ -14,8 +13,11 @@ import java.net.MalformedURLException;
 public class Client {
     public static GameInterface gi;
     public static int myPlayerID;
-    public static ArrayList<Board> gameBoards;
+    //public static ArrayList<Board> gameBoards;
+    public static Board myboard;
+    public static Board enemyboard;
     public static Scanner scan = new Scanner(System.in);
+    public static final int MAX_PLAYERS = 2;
     public enum Client_State {
 	S_INIT,
         S_CONNECTING,
@@ -57,17 +59,25 @@ public class Client {
 			state = Client_State.S_INIT;
 		}
 	}
-        //gi = new ClientWrapper();
         myPlayerID = gi.registerPlayer();
-        System.out.println("You have registered as Player " + myPlayerID);
+	//+1 to show as "Player 1" or "Player 2" instead of 0 and 1
+        System.out.println("You have registered as Player " + myPlayerID + 1);
         System.out.println("Please wait for other players to join");
-        gi.wait(myPlayerID);
+	while(gi.getState() == GameState.CONNECTING)
+	    Thread.yield();
+        //gi.wait(myPlayerID);
         System.out.println("Both Players have joined, starting the game.");
-        gameBoards = gi.getBoards();
-        placeShips(gameBoards.get(myPlayerID));
+	//Instance our gameboards
+	myboard = new Board("");
+	enemyboard = new Board("");
+        //gameBoards = gi.getBoards();
+        placeShips(myboard);
+	System.out.println("You're done placeing your ships, please wait for the other player to finish placeing their ships.");
         System.out.println("Your board:");
-        System.out.println(gameBoards.get(myPlayerID).toString(true));
-        gi.setBoards(gameBoards);
+        System.out.println(myboard.toString(true));
+        //gi.setBoards(gameBoards);
+	while(gi.getState() == GameState.PLACEING)
+	    Thread.yield();
         gameLoop();
     }
 
@@ -95,13 +105,22 @@ public class Client {
 	while(true){
             Coordinate start = getcoord("Please enter a start coordinate to place your " + ShipFactory.getNameFromType(t));
             Coordinate end = getcoord("Please enter an end coordinate to place your " + ShipFactory.getNameFromType(t));
-            Ship s = ShipFactory.newShipFromType(t,start,end,b);
+	    //Make sure that the ship is the correct length and not diagonal
+	    Ship s = null;
+	    try{
+            	s = ShipFactory.newShipFromType(t,start,end,b);
+	    }catch(IllegalArgumentException e){
+		System.out.println("You can't make a ship like that!");
+		continue;
+	    }
+	    //Make sure it's not overlapping another ship
             if(b.canShipFit(s)){
                 b.addShip(s);
 		gi.placeShipOnBoard(myPlayerID,s);
                 break;
             }else{
 		System.out.println("That is an unacceptable place to put your " + ShipFactory.getNameFromType(t));
+		continue;
 	    }
 
 	}
@@ -112,6 +131,7 @@ public class Client {
         System.out.println(board.toString(true));
         for(Ship.ShipType type : Ship.ShipType.values()) {
 	    placeship(type,board);
+	    System.out.println(board.toString(true));
         }
     }
 
@@ -119,11 +139,33 @@ public class Client {
         System.out.println("The game is starting!");
         do {
             // Wait for our turn
-            gi.wait(myPlayerID);
+	    while(gi.getTurn() != myPlayerID)
+		Thread.yield();
+	    //Find where the other player moved
+	    Coordinate om = gi.getFeedback();
+	    
+	    //And apply it to our board
+	    if(om != null) //This is false the first attack.
+	    	myboard.doAttack(om);
+
             // Get the updated boards
-            gameBoards = gi.getBoards();
-            System.out.println("Where would you like to place your move?");
-            Coordinate move = new Coordinate(scan.nextLine());
+
+            //gameBoards = gi.getBoards();
+            Coordinate move = getcoord("Where woudl you like to place your move?");
+	    MoveResult r = gi.doAttack(myPlayerID + 1, move);
+	    if(r.hit){
+		enemyboard.applyHitMarker(move);
+		System.out.printf("Hit! ");
+		if(r.sunk != null){
+		    System.out.printf("You sunk the other player's " + ShipFactory.getNameFromType(r.sunk) + "!\n");
+		}
+	    }else{
+		enemyboard.applyMissMarker(move);
+		System.out.println("Miss!");
+	    }
+	    System.out.printf("Your board:\n%s\nEnemy board:\n%s\n",myboard.toString(true),enemyboard.toString(true));
+	    //System.out.println(r);
+	    /*
             Ship ship = gameBoards.get((myPlayerID + 1) % GameTracker.MAX_PLAYERS).makeMove(move);
             if(ship == null) {
                 System.out.println("Miss");
@@ -134,6 +176,7 @@ public class Client {
             }
             // Send the updated boards.
             gi.setBoards(gameBoards);
+	    */
         } while(!gi.isGameOver());
         System.out.println("The Game is Over!");
     }
