@@ -75,10 +75,7 @@ public abstract class ShipFactory {
                 throw new IllegalArgumentException(type + " does not identify a valid ShipType.");
         }
     }
-<<<<<<< HEAD
-}
-=======
-    
+
     public static boolean checkShipLength(Ship.ShipType type, Coordinate start, Coordinate end) {
         int length = 0;
         switch (type) {
@@ -116,4 +113,3 @@ public abstract class ShipFactory {
             return true;
     }
 }
->>>>>>> 6aaf91ebc117fc6cd764dfc3d84ef5233d8cbc6a
