@@ -57,8 +57,7 @@ public class Board implements Serializable {
     //Checks if an attack is reasonable
     public boolean canAttack(Coordinate c){
 	//Make sure we havn't already attacked this spot
-	if(moves[c.getRow()][c.getCol()]) return false;
-	return true;
+	return !(moves[c.getRow()][c.getCol()]);
     }
 
    
