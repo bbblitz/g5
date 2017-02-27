@@ -150,7 +150,11 @@ public class Client {
             // Get the updated boards
 
             //gameBoards = gi.getBoards();
-            Coordinate move = getcoord("Where woudl you like to place your move?");
+            Coordinate move = getcoord("Where would you like to place your move?");
+            
+            while (!enemyboard.canAttack(move)) {
+                move = getcoord("You can't attack there. Try again.");
+            }
             MoveResult r = gi.doAttack(myPlayerID + 1, move);
             if(r.hit){
                 enemyboard.applyHitMarker(move);
