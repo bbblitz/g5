@@ -57,15 +57,15 @@ public class Board implements Serializable {
     //Checks if an attack is reasonable
     public boolean canAttack(Coordinate c){
 	//Make sure we havn't already attacked this spot
-	if(moves[c.getCol()][c.getRow()]) return false;
+	if(moves[c.getRow()][c.getCol()]) return false;
 	return true;
     }
 
    
     //Performs an attack, returns wether or not we hit
     public MoveResult doAttack(Coordinate c){
-	moves[c.getCol()][c.getRow()] = true;
-	Ship s = theShips[c.getCol()][c.getRow()];
+	moves[c.getRow()][c.getCol()] = true;
+	Ship s = theShips[c.getRow()][c.getCol()];
 	if(s != null){
 	    s.registerHit();
 	    if(s.isSunk())
@@ -77,8 +77,8 @@ public class Board implements Serializable {
     }
 
     public Ship makeMove(Coordinate move) {
-        moves[move.getCol()][move.getRow()] = true;
-        Ship ship = theShips[move.getCol()][move.getRow()];
+        moves[move.getRow()][move.getCol()] = true;
+        Ship ship = theShips[move.getRow()][move.getCol()];
         if(ship != null) {
             ship.registerHit();
         }
