@@ -50,7 +50,7 @@ public class ClientWrapper implements GameInterface {
     public MoveResult doAttack(int playerID, Coordinate c){
 	return (MoveResult) Serializer.fromByteArray(serverInterface.doAttack(playerID,Serializer.toByteArray(c)));
     }
-    
+
     /*
       Client side wrapper around the 
       @return 
