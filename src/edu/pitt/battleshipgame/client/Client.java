@@ -61,7 +61,7 @@ public class Client {
         }
         myPlayerID = gi.registerPlayer();
         //+1 to show as "Player 1" or "Player 2" instead of 0 and 1
-        System.out.println("You have registered as Player " + myPlayerID + 1);
+        System.out.println("You have registered as Player " + (myPlayerID + 1));
         System.out.println("Please wait for other players to join");
         while(gi.getState() == GameState.INIT)
             Thread.yield();
