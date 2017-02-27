@@ -15,6 +15,7 @@ public class GameTracker {
     private GameState state = GameState.INIT;
     private int playerTurn = 0;
     Object lock;
+    private boolean quit = false;
     
     public GameTracker() {
         // Exists to protect this object from direct instantiation
@@ -140,11 +141,31 @@ public class GameTracker {
     
     public boolean isGameOver() {
         System.out.println("Checking if the game is over...");
+        if(this.quit){
+            System.out.println("A player has quit. The game is over");
+            return true;
+        }
         for(Board board : gameBoards) {
             if(board.areAllShipsSunk()) {
                 return true;
             }
         }
         return false;
+    }
+    
+    public boolean GameOver(String quit){
+        if(quit.equalsIgnoreCase("quit")){
+           // state = GameState.FIN;
+            this.quit = true;
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean getQuit(){
+        return this.quit;
+    }
+    public void exit(){
+        System.exit(0);
     }
 }
