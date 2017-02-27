@@ -106,4 +106,17 @@ public class ServerWrapper implements ServerInterface {
     public boolean isGameOver(){
         return tracker.isGameOver();
     }
+    
+    public boolean GameOver(String quit){
+        return tracker.GameOver(quit);
+    }
+    
+    public boolean getQuit(){
+        return tracker.getQuit();
+    }
+    
+    
+    public void exit(){
+        System.exit(0);
+    }
 }

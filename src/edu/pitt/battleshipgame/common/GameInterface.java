@@ -15,4 +15,6 @@ public interface GameInterface {
     int getTurn();
     GameState getState();
     boolean isGameOver();
+    boolean GameOver(String dummy);
+    boolean getQuit();
 }

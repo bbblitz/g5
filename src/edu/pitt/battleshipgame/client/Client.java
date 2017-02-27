@@ -92,7 +92,15 @@ public class Client {
         System.out.println(prompt);
         while(true){
             try{
-                return new Coordinate(scan.nextLine());
+                String dummy = scan.nextLine();
+                if(dummy.equalsIgnoreCase("quit")){
+                }
+                gi.GameOver(dummy);
+                if(gi.getQuit()){
+                    System.out.println("A player has quit the game. The game is over");
+                    System.exit(0);
+                }
+                return new Coordinate(dummy);
             }catch(Exception e){
                 System.out.printf("Unaccpetable coordinate!\n%s\n",prompt);
             }
@@ -138,10 +146,16 @@ public class Client {
         System.out.println("The game is starting!");
         do {
             // Wait for our turn
-            while(gi.getTurn() != myPlayerID)
+            while(gi.getTurn() != myPlayerID){
+                if(gi.getQuit()){
+                System.out.println("A player has quit the game. The game is over.");
+                System.exit(0);
+                }
                 Thread.yield();
+            }
             //Find where the other player moved
             Coordinate om = gi.getFeedback();
+
             
             //And apply it to our board
             if(om != null) //This is false the first attack.
@@ -180,6 +194,10 @@ public class Client {
             // Send the updated boards.
             gi.setBoards(gameBoards);
             */
+            if(gi.getQuit()){
+                System.out.println("A player has quit the game. The game is over.");
+                System.exit(0);
+            }
         } while(!gi.isGameOver());
         System.out.println("The Game is Over!");
     }
