@@ -63,8 +63,17 @@ public class ClientWrapper implements GameInterface {
         return serverInterface.isGameOver();
     }
     
+<<<<<<< HEAD
     public boolean GameOver(int player, String dummy){
         return serverInterface.GameOver(player,dummy);
+=======
+    public int getWinner() {
+        return serverInterface.getWinner();
+    }
+    
+    public boolean GameOver(String quit){
+        return serverInterface.GameOver(quit);
+>>>>>>> refs/remotes/origin/master
     }
     
     public boolean getQuit(){

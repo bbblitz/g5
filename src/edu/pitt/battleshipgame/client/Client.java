@@ -158,6 +158,10 @@ public class Client {
             //Find where the other player moved
             Coordinate om = gi.getFeedback();
 
+            //Check if the game is ended
+            if (gi.isGameOver()) {
+                break;
+            }
             
             //And apply it to our board
             if(om != null) //This is false the first attack.
@@ -202,6 +206,7 @@ public class Client {
             }
         } while(!gi.isGameOver());
         System.out.println("The Game is Over!");
+        System.out.println("Player " + gi.getWinner() + " has won!");
     }
     
     public static boolean checkGame(){
