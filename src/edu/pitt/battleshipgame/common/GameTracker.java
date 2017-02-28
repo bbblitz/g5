@@ -16,6 +16,8 @@ public class GameTracker {
     private int playerTurn = 0;
     Object lock;
     private boolean quit = false;
+    private int loser = 0;
+    private boolean surrender = false;
     
     public GameTracker() {
         // Exists to protect this object from direct instantiation
@@ -143,17 +145,50 @@ public class GameTracker {
         return false;
     }
     
-    public boolean GameOver(String quit){
-        if(quit.equalsIgnoreCase("quit")){
+            
+    public int getWinner() {
+        int count = 0;
+        for (Board board : gameBoards) {
+            if (board.areAllShipsSunk()) {
+                return count + 1;
+            } else {
+                count++;
+            }
+        }
+        return -1;
+    }
+    
+    public boolean GameOver(int player, String dummy){
+        if(dummy.equalsIgnoreCase("q")){
            // state = GameState.FIN;
             this.quit = true;
+            this.loser = player;
             return true;
+        }
+        if(dummy.equalsIgnoreCase("s")){
+            this.surrender = true;
+            this.loser = player;
         }
         return false;
     }
     
+    public void Surrender(int player, String dummy){
+        if(dummy.equalsIgnoreCase("s")){
+            this.surrender = true;
+            this.loser = player;
+        }
+    } 
+    
     public boolean getQuit(){
         return this.quit;
+    }
+    
+    public boolean getSurrender(){
+        return this.surrender;
+    }
+    
+    public int getLoser(){
+        return this.loser;
     }
     public void exit(){
         System.exit(0);

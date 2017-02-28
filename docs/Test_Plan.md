@@ -4,65 +4,65 @@
 Basic requirement must be followed:
 1. Functional
 
-  * FUNC-1 Two Players game: This is a game between 2 players, one player cannot play alone, no third player can involve.
+  * FUNC-1 Two Players game: This is a game between 2 players, one player cannot play alone, no third player can involve. ![][check]
 
-  * FUNC-2 Board size : Board size is 10x10 ( horizontal is A-J, vertical is 1-10)
+  * FUNC-2 Board size : Board size is 10x10 ( horizontal is A-J, vertical is 1-10) ![][check]
 
   * FUNC-3 Ship placement
 
-    * FUNC-3.1 Ship placement input format: Must be valid characters (A-J, 1-10), in correct format: [A-J]:[1-10]; both upper and lowecase are allowed. For example A:3, d:7.
+    * FUNC-3.1 Ship placement input format: Must be valid characters (A-J, 1-10), in correct format: [A-J]:[1-10]; both upper and lowecase are allowed. For example A:3, d:7. ![][check]
 
-    * FUNC-3.2 Ship number: Each player has 5 ships, 1 in each type: carrier, battleship, cruiser, submarine, destroyer.
+    * FUNC-3.2 Ship number: Each player has 5 ships, 1 in each type: carrier, battleship, cruiser, submarine, destroyer. ![][check]
 	
-	* FUNC-3.3 Ships size: Carrier: 5 spaces, battleship: 4 spaces, cruiser: 3 spaces, submarine: 3 spaces, destroyer: 2 spaces.
+	* FUNC-3.3 Ships size: Carrier: 5 spaces, battleship: 4 spaces, cruiser: 3 spaces, submarine: 3 spaces, destroyer: 2 spaces. ![][check]
 
-    * FUNC-3.4 Ship placed in horizontal or vertical only: no diagnal ship placement is allowed
+    * FUNC-3.4 Ship placed in horizontal or vertical only: no diagnal ship placement is allowed ![][check][](check)
 
-    * FUNC-3.5 Ships overlap: No parts/ spaces in any ships can overlap.
+    * FUNC-3.5 Ships overlap: No parts/ spaces in any ships can overlap. ![][check][](check)
 
-    * FUNC-3.6 Ships out of bound: Ships must be placed inside board.
+    * FUNC-3.6 Ships out of bound: Ships must be placed inside board. ![][check][](check)
   
   * FUNC-4 Player's input during game
   
-	* FUNC-4.1 Player's fire must be valid: characters (A-J, 1-10), in correct format: [A-J]:[1-10]; both upper and lowecase are allowed. For example A:3, d:7.
+	* FUNC-4.1 Player's fire must be valid: characters (A-J, 1-10), in correct format: [A-J]:[1-10]; both upper and lowecase are allowed. For example A:3, d:7. ![][check][](check)
 
-    * FUNC-4.2 Player's turn: Player can only fire in his turn. Any input in oponent's turn must be ignored.
+    * FUNC-4.2 Player's turn: Player can only fire in his turn. Any input in oponent's turn must be ignored. ![][check][](check)
 
-    * FUNC-4.3 Valid fire coordination: Player's fire coordination must be inside the board.	
+    * FUNC-4.3 Valid fire coordination: Player's fire coordination must be inside the board. ![][check][](check)
 
-    * FUNC-4.4 Duplicate fire: Player can fire a position 1 time only. Duplicate fire not allowed.
+    * FUNC-4.4 Duplicate fire: Player can fire a position 1 time only. Duplicate fire not allowed.![][check]
 	
 	* FUNC-4.5 Player quit/surrender in the middle: Player can surrender/ quit in the middle of the game. Type 'q' to quit; 's' to surrender.
 
   * FUNC-5 Game play	
   
-    * FUNC-5.1 Ships placement must be finished before firing phase.  
+    * FUNC-5.1 Ships placement must be finished before firing phase.  ![][check]
     
-	* FUNC-5.2 Ship sunk announcement: If all spaces in one ship are firedown, 2 players must be announced that ship has been destroyed. For example: Player 1 carrier has been destroyed.
+	* FUNC-5.2 Ship sunk announcement: If all spaces in one ship are firedown, 2 players must be announced that ship has been destroyed. For example: Player 1 carrier has been destroyed.![][check]
     
-    * FUNC-5.3 Ship hit/miss announcement: If a fire hit a ship, both players must be announced that fire was a hit, otherwise they should be announced it was a miss.
+    * FUNC-5.3 Ship hit/miss announcement: If a fire hit a ship, both players must be announced that fire was a hit, otherwise they should be announced it was a miss.![][check]
     
-    * FUNC-5.4 Winner decision: If a player's all 5 ships has been destroyed, the game should announce a winner and finish.
+    * FUNC-5.4 Winner decision: If a player's all 5 ships has been destroyed, the game should announce a winner and finish.![][check]
 
-    * FUNC-5.5 Time limit: Player has limited time to make decision. Place the ship: 2 min maximum. Each turn: 30 second. For any reasons (afk, game client crash, internet lost) a player cannot finish his move, he's considered to lose the match.
+    * FUNC-5.5 Time limit: Player has limited time to make decision. Place the ship: 2 min maximum. Each turn: 30 second. For any reasons (afk, game client crash, internet lost) a player cannot finish his move, he's considered to lose the match.![][check]
 	
-	* FUNC-5.6 Oponent ship disclosure: Player cannot see oponent's ship placement.
+	* FUNC-5.6 Oponent ship disclosure: Player cannot see oponent's ship placement.![][check]
 	
-	* FUNC-5.7 Player must switch turn after every fire.
+	* FUNC-5.7 Player must switch turn after every fire.![][check]
 
 2. Non Functional
 
-  * NONFUNC-1 Game client must run on all 3 operating system Linux/Windows/Mac.
+  * NONFUNC-1 Game client must run on all 3 operating system Linux/Windows/Mac.![][check]
 
-  * NONFUNC-2 Game server must run on Ja  * language:
+  * NONFUNC-2 Game server must run on Ja  * language:![][check]
 
-  * NONFUNC-2 Players can connect to server and play through network.
+  * NONFUNC-2 Players can connect to server and play through network.![][check]
 
   
 3. Optional Requirement (to make game more enjoyable; you can have more of them)
   * Random start: who start firing first will be random
   * Multiple game simultaneously: server can handles multiple games at the same time
-  * No ship movement: should be a basic requirement, but it's not really necessary
+  * No ship movement: should be a basic requirement, but it's not really necessary ![][check]
   * Type 'help' to show game's rules
   * etc...
   
@@ -638,3 +638,5 @@ TC-Non3b: 2 clients can reach the server at once.
   * Execution Steps: Launch battleship program and run as client and connect to server.
   * Output Values: Expected output would be a successful launch message for both clients, can also receive error message if unsuccessful or an error occurred while trying to reach the server.
   * Post Conditions: If successful, both clients will be connected to the server, if not then the clients are not connected to the server.
+
+[check]: https://srdr.ahrq.gov/images/Accept.png?1443636231
