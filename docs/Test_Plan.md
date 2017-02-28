@@ -639,4 +639,4 @@ TC-Non3b: 2 clients can reach the server at once.
   * Output Values: Expected output would be a successful launch message for both clients, can also receive error message if unsuccessful or an error occurred while trying to reach the server.
   * Post Conditions: If successful, both clients will be connected to the server, if not then the clients are not connected to the server.
 
-[check]: http://www.iconsdb.com/icons/preview/guacamole-green/checkmark-xxl.png 
+[check]: https://srdr.ahrq.gov/images/Accept.png?1443636231
