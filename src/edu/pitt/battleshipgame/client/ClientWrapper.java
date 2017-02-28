@@ -63,14 +63,22 @@ public class ClientWrapper implements GameInterface {
         return serverInterface.isGameOver();
     }
     
-    public boolean GameOver(String quit){
-        return serverInterface.GameOver(quit);
+    public boolean GameOver(int player, String dummy){
+        return serverInterface.GameOver(player,dummy);
     }
     
     public boolean getQuit(){
         return serverInterface.getQuit();
     }
-
+    
+    public int getLoser(){
+        return serverInterface.getLoser();
+    }
+    
+    public boolean getSurrender(){
+        return serverInterface.getSurrender();
+    }
+    
     public Coordinate getFeedback(){
 	return (Coordinate) Serializer.fromByteArray(serverInterface.getFeedback());
     }
@@ -86,4 +94,5 @@ public class ClientWrapper implements GameInterface {
     public void exit(){
         System.exit(0);
     }
+    
 }
