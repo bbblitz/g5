@@ -119,36 +119,73 @@ public class Board implements Serializable {
     public String toString(boolean showShips) {
         StringBuilder sb = new StringBuilder();
         // Buld an intermediate representation of the board as a character array
-        char [][] boardRepresentation = new char[BOARD_DIM+1][BOARD_DIM+1];
-        boardRepresentation[0][0] = '+';
+        String [][] boardRepresentation = new String[BOARD_DIM+1][BOARD_DIM+1];
+        boardRepresentation[0][0] = " +";
         for (int row = 1; row < BOARD_DIM+1; row++) {
             // The first column will be filled with the row labels
-            boardRepresentation[row][0] = Integer.toString(row).charAt(0);
+            if (row != 10)
+                boardRepresentation[row][0] = " " + Integer.toString(row);
+            else
+                boardRepresentation[row][0] = Integer.toString(row) + "";
         }
         for (int col = 1; col < BOARD_DIM+1; col++) {
-            boardRepresentation[0][col] = Coordinate.reverseColumnLookup(col-1);
+            boardRepresentation[0][col] = " " + Coordinate.reverseColumnLookup(col-1) + " ";
         }
         for (int row = 0; row < BOARD_DIM; row++) {
             for (int col = 0; col < BOARD_DIM; col++) {
                 if (moves[row][col]) {
                     if (theShips[row][col] != null || hits[row][col]) {
-                        boardRepresentation[row+1][col+1] = 'X';
+                        boardRepresentation[row+1][col+1] = " X ";
                     } else {
-                        boardRepresentation[row+1][col+1] = 'O';
+                        boardRepresentation[row+1][col+1] = " O ";
                     }
                 }
 		else if (showShips && theShips[row][col] != null) {
-                    boardRepresentation[row+1][col+1] = 'S';
+                    String shipName = getShipNameFromCoordinates(new Coordinate(row, col));
+                    System.out.println("shipName:\t" + shipName + "\n");
+                    switch(shipName){
+                        case("Carrier"):
+                            boardRepresentation[row+1][col+1] = " C ";
+                            break;
+                        case("Battleship"):
+                            boardRepresentation[row+1][col+1] = " B ";
+                            break;
+                        case("Submarine"):
+                            boardRepresentation[row+1][col+1] = " S ";
+                            break;
+                        case("Cruiser"):
+                            boardRepresentation[row+1][col+1] = " C ";
+                            break;
+                        case("Destroyer"):
+                            boardRepresentation[row+1][col+1] = " D ";
+                            break;
+                        default:
+                            throw new IllegalArgumentException("Error creating board.");
+                    }
                 }
                 else{
-                    boardRepresentation[row+1][col+1] = ' ';
+                    boardRepresentation[row+1][col+1] = "   ";
                 }
             }
         }
-        for (char [] row : boardRepresentation) {
-            sb.append(row);
-            sb.append('\n');
+
+        for (int i = 0; i <= BOARD_DIM; i++) {
+            for (int j = 0; j <= BOARD_DIM; j++) {
+                sb.append(boardRepresentation[i][j]);
+            }
+            sb.append("\n");
         }
         return sb.toString();
+    }
+    
+    public String getShipNameFromCoordinates(Coordinate c) {
+        for (Ship s : shipList) {
+            List<Coordinate> coordList = s.getCoordinates();
+            for (Coordinate coord : coordList) {
+                if (coord.getRow() == c.getRow() && coord.getCol() == c.getCol())
+                    return s.getName();
+            }
+        }
+        return "";
     }
 }
