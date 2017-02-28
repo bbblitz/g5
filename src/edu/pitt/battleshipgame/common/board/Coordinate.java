@@ -46,11 +46,7 @@ public class Coordinate implements Serializable {
     public void setCoordinates(String coord) throws IllegalArgumentException {
         int _col = 0;
         String [] coordinates = coord.split(":");
-<<<<<<< HEAD
-        if (coord.length() != 3 && !coordinates[1].equals("10")) {
-=======
         if (coord.length() != 3 && !coordinates[1].equals("10") ) {
->>>>>>> refs/remotes/origin/issue2
             throw new IllegalArgumentException(formattingRules);
         }
         
