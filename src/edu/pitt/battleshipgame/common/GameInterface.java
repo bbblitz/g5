@@ -13,6 +13,7 @@ public interface GameInterface {
     MoveResult doAttack(int playerID, Coordinate c);
     Coordinate getFeedback();
     int getTurn();
+    int getWinner();
     GameState getState();
     boolean isGameOver();
     boolean GameOver(String dummy);

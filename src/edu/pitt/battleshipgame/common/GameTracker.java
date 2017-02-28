@@ -152,6 +152,18 @@ public class GameTracker {
         return false;
     }
     
+    public int getWinner() {
+        int count = 0;
+        for (Board board : gameBoards) {
+            if (board.areAllShipsSunk()) {
+                return count + 1;
+            } else {
+                count++;
+            }
+        }
+        return -1;
+    }
+    
     public boolean GameOver(String quit){
         if(quit.equalsIgnoreCase("quit")){
            // state = GameState.FIN;
