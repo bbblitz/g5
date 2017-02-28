@@ -25,7 +25,10 @@ public interface ServerInterface {
     @WebMethod GameState getState();
     @WebMethod int getWinner();
     @WebMethod boolean isGameOver();
-    @WebMethod boolean GameOver(String dummy);
+    @WebMethod boolean GameOver(int player, String dummy);
     @WebMethod boolean getQuit();
+    @WebMethod int getLoser();
+    @WebMethod boolean getSurrender();
+    
     
 }

@@ -93,13 +93,12 @@ public class Client {
         while(true){
             try{
                 String dummy = scan.nextLine();
-                if(dummy.equalsIgnoreCase("quit")){
+                gi.GameOver(myPlayerID, dummy);
+
+                if(checkGame()){
+                   System.exit(0);
                 }
-                gi.GameOver(dummy);
-                if(gi.getQuit()){
-                    System.out.println("A player has quit the game. The game is over");
-                    System.exit(0);
-                }
+                
                 return new Coordinate(dummy);
             }catch(Exception e){
                 System.out.printf("Unaccpetable coordinate!\n%s\n",prompt);
@@ -151,9 +150,8 @@ public class Client {
         do {
             // Wait for our turn
             while(gi.getTurn() != myPlayerID){
-                if(gi.getQuit()){
-                System.out.println("A player has quit the game. The game is over.");
-                System.exit(0);
+                if(checkGame()){
+                    System.exit(0);
                 }
                 Thread.yield();
             }
@@ -209,5 +207,33 @@ public class Client {
         } while(!gi.isGameOver());
         System.out.println("The Game is Over!");
         System.out.println("Player " + gi.getWinner() + " has won!");
+    }
+    
+    public static boolean checkGame(){
+        int winner = 0;
+        int loser = 0;
+        if(gi.getQuit()){
+            loser = gi.getLoser() + 1;
+            if(loser == 1){
+                winner = 2;
+            }
+            if(loser == 2){
+                winner = 1;
+            }
+            System.out.println("Player " + loser + " has quit the game. Player " + winner + " is the winner!");
+            return true;
+        }
+        if(gi.getSurrender()){
+            loser = gi.getLoser() + 1;
+            if (loser == 1){
+                winner = 2;
+            } 
+            if(loser == 2){
+                winner = 1;
+            }
+            System.out.println("Player " + loser + " has surrendered the game. Player " + winner + " is the winner!");
+            return true;
+        }
+        return false;
     }
 }

@@ -16,6 +16,8 @@ public interface GameInterface {
     int getWinner();
     GameState getState();
     boolean isGameOver();
-    boolean GameOver(String dummy);
+    boolean GameOver(int player, String dummy);
     boolean getQuit();
+    boolean getSurrender();
+    int getLoser();
 }
