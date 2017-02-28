@@ -49,9 +49,9 @@ public class GameTracker {
                 System.out.println("Player " + playerID + " is waiting for other players");
                 while(registeredPlayers < MAX_PLAYERS) {
                     try {
-                        Thread.sleep(100);
+                        Thread.yield();
                     } catch (InterruptedException e) {
-                        System.err.println(e + " I can't sleep!");
+                        System.err.println(e + " I can't yield!");
                     }
                 }
                 state = GameState.PLAYING;
@@ -61,9 +61,9 @@ public class GameTracker {
             {
                 while(playerTurn != playerID) {
                     try {
-                        Thread.sleep(100);
+                        Thread.yield();
                     } catch (InterruptedException e) {
-                        System.err.println(e + " I can't sleep!");
+                        System.err.println(e + " I can't yield!");
                     }
                 }
                 break;
