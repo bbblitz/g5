@@ -182,7 +182,6 @@ public class Board implements Serializable {
         for (Ship s : shipList) {
             List<Coordinate> coordList = s.getCoordinates();
             for (Coordinate coord : coordList) {
-                System.out.println("coord:\t" + coord + "\nc:\t" + c);
                 if (coord.getRow() == c.getRow() && coord.getCol() == c.getCol())
                     return s.getName();
             }
