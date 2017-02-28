@@ -136,9 +136,9 @@ TC-3.3a: Correct Ship Input Test X Direction
   * Input Values:
     * A1-A5 for Carrier
     * B1-B4 for Battleship
-    * C1-C3 for Destroyer
+    * C1-C3 for Cruiser
     * D1-D3 for Submarine
-    * E1-E2 for Patrol Boat
+    * E1-E2 for Destroyer
   * Execution Steps:
     * Input the given values for the Carrier. Check that the ship was placed correctly
     * If the ship is rejected, stop the test and mark that the failure came from the Carrier entry. End the test and test again later.
