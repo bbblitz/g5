@@ -145,10 +145,7 @@ public class GameTracker {
         return false;
     }
     
-<<<<<<< HEAD
-    public boolean GameOver(int player, String dummy){
-        if(dummy.equalsIgnoreCase("q")){
-=======
+            
     public int getWinner() {
         int count = 0;
         for (Board board : gameBoards) {
@@ -161,10 +158,9 @@ public class GameTracker {
         return -1;
     }
     
-    public boolean GameOver(String quit){
-        if(quit.equalsIgnoreCase("quit")){
+    public boolean GameOver(int player, String dummy){
+        if(dummy.equalsIgnoreCase("q")){
            // state = GameState.FIN;
->>>>>>> refs/remotes/origin/master
             this.quit = true;
             this.loser = player;
             return true;
