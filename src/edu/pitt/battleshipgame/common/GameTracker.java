@@ -47,26 +47,16 @@ public class GameTracker {
             case INIT:
             {
                 System.out.println("Player " + playerID + " is waiting for other players");
-                while(registeredPlayers < MAX_PLAYERS) {
-                    try {
-                        Thread.yield();
-                    } catch (InterruptedException e) {
-                        System.err.println(e + " I can't yield!");
-                    }
-                }
+                while(registeredPlayers < MAX_PLAYERS)
+		    Thread.yield();
                 state = GameState.PLAYING;
-                break;
+		break;
             }
             case PLAYING:
             {
-                while(playerTurn != playerID) {
-                    try {
-                        Thread.yield();
-                    } catch (InterruptedException e) {
-                        System.err.println(e + " I can't yield!");
-                    }
-                }
-                break;
+                while(playerTurn != playerID)
+		    Thread.yield();
+		break;
             }
             default:
                 break;
