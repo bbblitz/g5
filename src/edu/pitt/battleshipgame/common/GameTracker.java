@@ -9,11 +9,14 @@ import edu.pitt.battleshipgame.common.ships.Ship;
 
 public class GameTracker {
     public static final int MAX_PLAYERS = 2;
+    public final int MOVE_TIMEOUT = 30;
+    public final int PLACE_TIMEOUT = 120;
     private int registeredPlayers = 0;
     private ArrayList<Board> gameBoards;
     private Coordinate feedback; //The last player's attack to happen
     private GameState state = GameState.INIT;
     private int playerTurn = 0;
+    private long[] lastrequesttime;
     Object lock;
     private boolean quit = false;
     
@@ -39,6 +42,7 @@ public class GameTracker {
 	if(registeredPlayers == MAX_PLAYERS){
 	    state=GameState.PLACEING;
 	}
+	lastrequesttime[registeredPlayers - 1] = System.currentTimeMillis();
         return registeredPlayers - 1;
     }
 
@@ -68,6 +72,11 @@ public class GameTracker {
     }
 
     public int getTurn(){
+	//This gets called continuously, so check to see if a player has taken too long here
+	if(System.currentTimeMillis() - lastrequesttime[playerTurn] > MOVE_TIMEOUT){
+	    System.out.println("Player " + playerTurn + "Has timed out!");
+
+	}
 	return playerTurn;
     }
 
