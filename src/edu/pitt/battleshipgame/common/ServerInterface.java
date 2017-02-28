@@ -23,6 +23,7 @@ public interface ServerInterface {
     @WebMethod byte [] getFeedback();
     @WebMethod int getTurn();
     @WebMethod GameState getState();
+    @WebMethod int getWinner();
     @WebMethod boolean isGameOver();
     @WebMethod boolean GameOver(String dummy);
     @WebMethod boolean getQuit();

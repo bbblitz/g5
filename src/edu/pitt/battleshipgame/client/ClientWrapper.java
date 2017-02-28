@@ -63,6 +63,10 @@ public class ClientWrapper implements GameInterface {
         return serverInterface.isGameOver();
     }
     
+    public int getWinner() {
+        return serverInterface.getWinner();
+    }
+    
     public boolean GameOver(String quit){
         return serverInterface.GameOver(quit);
     }
