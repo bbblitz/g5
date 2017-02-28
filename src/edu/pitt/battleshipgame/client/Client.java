@@ -118,13 +118,8 @@ public class Client {
             try{
                 s = ShipFactory.newShipFromType(t,start,end,b);
             }catch(IllegalArgumentException e){
-                try{
-                    s = ShipFactory.newShipFromType(t,end,start,b);
-                }catch(IllegalArgumentException ex){
-                
-                    System.out.println("You can't make a ship like that!");
-                    continue;
-                }
+                System.out.println("You can't make a ship like that!");
+                continue;
             }
             //Make sure it's not overlapping another ship
             if(b.canShipFit(s)){
